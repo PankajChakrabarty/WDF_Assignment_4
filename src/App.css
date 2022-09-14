@@ -1,0 +1,13 @@
+#container {
+  margin: 50px;
+}
+
+div {
+  margin-bottom: 30px;
+
+}
+
+label {
+  width: 120px;
+  display: inline-block;
+}
