@@ -1,41 +1,60 @@
 import './App.css';
-import {useState} from 'react';
+import { useState } from 'react';
 
+
+const URL = 'https://api.exchangerate.host/latest'
+const API_KEY = '9911b3806a1cbe40dacf96b52c007b3f3'
 
 function App() {
- const [Age, setAge] = useState(0)
- const [Lower, setLower] = useState(0)
- const [Upper, setUpper] = useState(0)
- 
+const  [eur, setEur] = useState(0);
+const  [gbp, setGbp] = useState(0);
+const  [rate, setRate] = useState(0);
 
- 
- function calculate() {
-  const lowerLimit = (220-Age)*0.65
-  setLower(lowerLimit)
-  const upperLimit = (220-Age)*0.85
-  setUpper(upperLimit)
-  
+async function convert(e) {
+  e.preventDefaut();
+  try {
+    const address = URL + API_KEY;
+    const response = await fetch(address);
 
- }
-    return(
-      <div id="container">
-        <h3> Heart rate limits Calculator</h3>
-        <form>
-          <div>
-            <label>Age:</label>
-            <input type="number" value ={Age} onChange={e=> setAge(e.target.value)}/>
-      </div>
-            <div>
-        
-          <label>Heart rate limits:</label>
-      <output>{Lower.toFixed(0)}-{Upper.toFixed(0)}</output>
+    if (response.ok) {
+      const json = await response.json();
+      console.log(json.rates.GBP);
+      setRate(json.rates.GBP);
 
-      </div>
-      <button id="calculate" type="button" onClick={calculate}>Calculate</button>
-
-      </form>
-      </div>
-    );
+      setGbp(eur * json.rate.GBP);
+    } else {
+      alert('Error retrieving exchange rate.');
+      console.log(response);
     }
-      
+  } catch (err) {
+    alert(err);
+  }
+}
+
+  return (
+    <div id="container">
+      <form onSubmit={convert}>
+      <div>
+          <label>Eur</label>&nbsp;
+          <input type="number" step="0.01" value={eur} onChange={e => setEur(e.target.value)} />
+          <output>{rate}</output>
+        </div>
+
+        <div>
+          <label>Gbp</label>
+          <output>{gbp.toFixed(2)}€</output>
+        </div>
+
+        <div>
+          <button>Calculate</button>
+        </div>
+        </form>
+        
+    </div>
+  );
+
+  
+}
+
+
 export default App;
