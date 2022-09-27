@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 
 
-const URL = 'https://api.exchangerate.host/latest'
-const API_KEY = '9911b3806a1cbe40dacf96b52c007b3f3'
+const URL = 'https://api.exchangerate.host/latest';
+const API_KEY = '911b3806a1cbe40dacf96b52c007b3f3';
 
 function App() {
 const  [eur, setEur] = useState(0);
@@ -21,8 +21,7 @@ async function convert(e) {
       const json = await response.json();
       console.log(json.rates.GBP);
       setRate(json.rates.GBP);
-
-      setGbp(eur * json.rate.GBP);
+      setGbp(eur * json.rates.GBP);
     } else {
       alert('Error retrieving exchange rate.');
       console.log(response);
@@ -31,6 +30,7 @@ async function convert(e) {
     alert(err);
   }
 }
+
 
   return (
     <div id="container">
