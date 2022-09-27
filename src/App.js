@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react';
 
 
+
 const URL = 'https://api.exchangerate.host/latest'
 const API_KEY = '9911b3806a1cbe40dacf96b52c007b3f3'
 
@@ -11,7 +12,7 @@ const  [gbp, setGbp] = useState(0);
 const  [rate, setRate] = useState(0);
 
 async function convert(e) {
-  e.preventDefaut();
+  e.preventDefault();
   try {
     const address = URL + API_KEY;
     const response = await fetch(address);
@@ -42,7 +43,7 @@ async function convert(e) {
 
         <div>
           <label>Gbp</label>
-          <output>{gbp.toFixed(2)}€</output>
+          <output>{gbp.toFixed(2)} €</output>
         </div>
 
         <div>
